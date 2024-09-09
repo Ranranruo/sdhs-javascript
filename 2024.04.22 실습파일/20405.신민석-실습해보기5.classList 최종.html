@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>실습해보기5.classList최종</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+      }
+
+      h1 {
+        text-align: center;
+        padding: 20px;
+      }
+      .buttons{
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
+      .btn{
+        border-radius: 10px;
+        font-weight: 600;
+        color: white;
+        background-color: black;
+        padding: 1em 2em;
+      }
+      .btn:last-child{
+        background-color: rgb(255, 35, 35);
+      }
+      .btn:hover{
+        opacity: .8;
+      }
+      .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 100px;
+      }
+      .item{
+        transition: .3s;
+        font-size: 70px;
+        padding: .5em;
+        border: 5px solid rgb(255, 83, 83);
+        border-radius: 10px;
+        margin: 1em;
+      }
+      .item.active{
+        filter: brightness(.8);
+        background-color: rgb(187, 187, 187);
+        scale: 1.1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>classList 연습해보기</h1>
+    <div class="buttons">
+      <button class="btn" onclick="">Hamburger</button>
+      <button class="btn" onclick="">Taco</button>
+      <button class="btn" onclick="">Pizza</button>
+      <button class="btn" onclick="">RESET</button>
+    </div>
+    <div class="container">
+      <div class="box1">
+        <div class="item hamburger">🍔</div>
+        <div class="item taco">🌮</div>
+        <div class="item hamburger">🍔</div>
+        <div class="item pizza">🍕</div>
+      </div>
+      <div class="box2">
+        <div class="item pizza">🍕</div>
+        <div class="item taco">🌮</div>
+        <div class="item taco">🌮</div>
+        <div class="item hamburger">🍔</div>
+      </div>
+      <div class="box3">
+        <div class="item taco">🌮</div>
+        <div class="item pizza">🍕</div>
+        <div class="item hamburger">🍔</div>
+        <div class="item pizza">🍕</div>
+      </div>
+    </div>
+    <script>
+      const $btns = document.querySelectorAll(".btn");
+      $btns.forEach(el => {
+        el.addEventListener("click", (e)=>{
+          if(e.target.innerText == "RESET") {
+            const haveActive = document.querySelector('.active');
+            if(!haveActive) return alert("리셋할께 없어요");
+            return reset();
+          }
+          const text = e.target.innerText.toLowerCase();
+          const doms = document.querySelectorAll(`.${text}`);
+          reset();
+          active(doms);
+        })
+      });
+      const active = (doms)=>{
+        doms.forEach(el=>el.classList.add("active"));
+      }
+      const reset = ()=>{
+        const $items = document.querySelectorAll('.item');
+        $items.forEach(el=>el.classList.remove("active"))
+      }
+    </script>
+  </body>
+</html>

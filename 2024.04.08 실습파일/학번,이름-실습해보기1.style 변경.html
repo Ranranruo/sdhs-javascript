@@ -1,0 +1,88 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>실습해보기1.style변경</title>
+<style>
+	#container {
+		background: red;
+		display: none;
+	}
+
+	#container.block{
+		display: block;
+	}
+</style>
+<script type="text/javascript">
+	// 1. onclick 속성 사용
+	let Controller = {
+		hide: function(){
+			document.getElementById('container').style.display = 'none';
+		},
+		show: function(){
+			document.getElementById('container').style.display = 'block';
+		}
+	};
+</script>
+</head>
+<body>
+	<!-- 1. onclick 객체 함수 사용 -->
+	<!-- <button type="button" onclick="Controller.show();">창 열기</button>
+  <div id="container">
+		<button type="button" onclick="Controller.hide();">닫기</button>
+	</div> -->
+
+	<!-- 2. onlick 기본 함수 사용 -->
+	<!-- <button type="button" onclick="show();">창 열기</button>
+	<div id="container">
+		<button type="button" onclick="hide();">닫기</button>
+	</div> -->
+
+	<!-- 3. addEventListener 사용 -->
+	<button type="button" onclick="show()" class="open">창 열기</button>
+	<div id="container">
+		<button onclick="hide()" type="button">닫기</button>
+	</div>
+
+	<!-- 4. classList 사용 -->
+	<!-- <button type="button" class="open">창 열기</button>
+	<div id="container">
+		<button type="button">닫기</button>
+	</div> -->
+
+	<script>
+    const buttons = document.querySelectorAll("button");
+		const openBtn = document.getElementsByClassName("open")[0];
+		const container = document.getElementById("container");
+		
+		// 2. 기본 함수 사용
+		const show = () => {
+			container.style.display = "block";
+		}
+
+		const hide = () => {
+			container.style.display = "none";
+		}
+
+		// 3. addEventListener 사용 -->
+    // for(let i=0; i<buttons.length; i++){
+    //   buttons[i].addEventListener("click", (e)=>{
+    //     if(i==0) buttons[i].nextElementSibling.style.display = "block";
+    //     if(i==1) buttons[i].parentElement.style.display = "none";
+    //   });
+    // }
+
+    // buttons[0].addEventListener("click", ()=>{
+    //   container.style.display = "block";
+    // });
+
+    // buttons[1].addEventListener("click", ()=>{
+    //   container.style.display = "none";
+    // });
+		
+		// 4. classList 사용
+		// buttons[0].addEventListener("click", show);
+		// container.addEventListener("click", hide);
+
+	</script>
+</body>
+</html>

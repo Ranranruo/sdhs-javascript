@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>실습해보기4.배경색 변경</title>
+    <style>
+      body{
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: .5s;
+      }
+      button{
+        background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,226,0,1) 25%, rgba(0,245,255,1) 63%, rgba(169,29,255,1) 100%);
+        border: none;
+        color: white;
+        padding: 1rem 2rem;
+        font-size: 30px;
+        border-radius: 10px;       
+        box-shadow: 1px 1px 10px rgba(0,0,0,.2);
+      }
+      button:active{box-shadow: inset 1px 1px 5px rgba(0,0,0,.3);}
+    </style>
+  </head>
+
+  <body id="theBody">
+    <button id="btn">배경색 바꾸기</button>
+    <script>
+      const colors = ["white", "yellow", "aqua", "purple"];
+      const $btn = document.querySelector("#btn");
+      const $body = document.querySelector("body");
+      let counter = 0;
+      $btn.addEventListener("click", ()=>{
+        counter++;
+        if(!(counter % colors.length)) counter = 0;
+        $body.style.background = colors[counter];
+      })
+      // white, yellow, aqua, purple
+    </script>
+  </body>
+</html>

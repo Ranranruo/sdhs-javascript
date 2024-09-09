@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>실습해보기4.Node 관계 다루기</title>
+    <style>
+      button {
+        margin: 5px;
+      }
+
+      .title {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>각 버튼을 클릭해보세요</h1>
+    <p class="title" id="first_title">container1</p>
+    <div
+      class="container"
+      id="container1"
+      style="border: 5px solid black; height: 100px"
+    >
+      <button class="btn">1번</button>
+      <button class="btn">2번</button>
+      <button class="btn">3번</button>
+      <!-- <button class="btn">4번</button> -->
+    </div>
+    <p class="title" id="second_title">container2</p>
+    <div
+      class="container"
+      id="container2"
+      style="border: 1px solid black; height: 100px"
+    >
+    </div>
+    <p class="title" id="third_title">container3</p>
+    <div
+      class="container"
+      id="container3"
+      style="border: 1px solid black; height: 100px"
+    >
+    </div>
+    <p class="title" id="third_title">container4</p>
+    <div
+      class="container"
+      id="container4"
+      style="border: 1px solid black; height: 100px"
+    >
+    <button class="btn">4번</button>
+    <button class="btn">5번</button>
+    </div>
+    <script type="text/javascript">
+      const $$btns = document.querySelectorAll(".btn");
+      const $$con = document.querySelectorAll(".container");
+      const $$text = document.querySelectorAll(".title");
+      $$btns.forEach(el=>
+        el.addEventListener("click", (e)=>{
+          const $parent = e.target.parentElement;
+          const parentNo = +e.target.parentElement.id.slice(-1);
+          const id = e.target.parentElement.id.slice(0, -1);
+          const nextParentNo = (parentNo == $$con.length) ? 1 : parentNo + 1;
+          const $nextParent = document.getElementById(id + nextParentNo);
+          move(e.target, $nextParent);
+          check($parent, parentNo, $nextParent, nextParentNo, id);
+        })
+      )
+      const move = (btn, next) => {
+        next.appendChild(btn);
+      }
+      const check = (cur, curNo, next, nextNo, id) => {
+        let $msg = document.querySelector(".msg");
+        if(cur.childElementCount <= 0){
+          if(!$msg){
+            $msg = document.createElement("p");
+            $msg.classList.add("msg");
+            $msg.id = `msg${nextNo}`;
+          }
+          $msg.innerText = id + nextNo + "(으)로 모든 버튼 이동 완료";
+          cur.before($msg);
+        }
+        let allNotEmpty = true;
+        $$con.forEach(el=>{
+          if(el.childElementCount <= 0)
+            allNotEmpty = false;
+        });
+        ($msg && allNotEmpty) ? $msg.remove() : "";
+      }
+    </script>
+  </body>
+</html>

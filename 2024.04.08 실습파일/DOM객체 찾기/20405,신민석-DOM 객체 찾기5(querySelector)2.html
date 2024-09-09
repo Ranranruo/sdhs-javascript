@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+  </head>
+  <body>
+    <button onclick="selectByCssSelector();">
+      CSS 선택자로 하나만 선택하기
+    </button>
+    <button onclick="selectByCssSelectorAll();">
+      CSS 선택자로 전체 선택하기
+    </button>
+    <p id="selected"></p>
+    <div>
+      <span class="bbb">1번</span>
+      <span>2번</span>
+      <span id="aaa">3번</span>
+      <span>4번</span>
+      <span class="bbb">5번</span>
+      <span>6번</span>
+    </div>
+    <script type="text/javascript">
+      const spanList = document.querySelectorAll("div > span");
+      let check = null;
+      let flag = true;
+      const removeBg = ()=>{
+        for (let el of spanList){
+          el.style.background = "transparent";
+        }
+      }
+      const checkPattern = () =>{
+        removeBg();
+        if(value == "" || value.split(" ").length > 1){
+          alert("공백은 입력할 수 없습니다.\n다시 입력해주세요.");
+          return;
+        }
+        if(!isNaN(value.charAt(1))){
+          alert("선택자는 숫자로 시작할 수 없습니다.\n다시 입력해주세요.");
+          return;
+        }
+        document.getElementById("selected").textContent = `선택된 CSS는 ${value} 입니다.`;
+        if(spanEle.length >= 1){
+          for(let el of spanEle){
+            el.style.background = 'red';
+          }
+        }else{
+          spanEle.style.background = 'red';
+        }
+        try {
+          
+          let spanEle = check === "selector" ? document.querySelector(value) : document.querySelectorAll(value);
+          if(spanEle == null || spanEle.length == 0){
+            alert(`span 태그들 중 ${value} 선택자는 존재하지 않습니다. 다시 입력해주세요`);
+            return;
+          }
+          flag = false;
+          return;
+        } catch (error) {
+          alert("잘못된 선택자를 입력하셨습니다. 다시 입력해주세요.");          
+        }
+      }
+      const selectByCssSelector = () =>{
+        flag = true;
+        while(flag){
+          const selector = prompt("CSS 입력");
+          if(selector == null) break;
+          check = 'selector';
+          checkPattern(selector);
+        }        
+      }
+      const selectByCssSelectorAll = () => {
+        flag = true;
+        while(flag){
+          const selector = prompt("CSS 입력");
+          if(selector == null) break;
+          check = 'selectorAll';
+          checkPattern(selector);
+        }          
+      }
+    </script>
+  </body>
+</html>

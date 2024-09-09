@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ex01.자바스크립트 DOM연습</title>
+  <style>
+    body {
+      margin: 20px;
+      padding: 20px;
+      line-height: 1;
+      font-size: 1em;
+      color: #000;
+    }
+
+    ul,
+    li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    li {
+      margin-top: 20px;
+    }
+
+    .title {
+      margin: 0;
+      padding: 0;
+      font-size: 1.5em;
+      font-weight: 500;
+    }
+
+    .container {
+      margin-top: 35px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 class="title">1.자바스크립트 DOM연습</h1>
+  <div class="container">
+    <ul id="tutorial">
+      <li class="html">HTML</li>
+      <li class="css">CSS</li>
+      <li class="css3">CSS3</li>
+      <li class="javascript">JavaScript</li>
+      <li class="jquery">jQuery</li>
+      <li class="blank"></li>
+    </ul>
+    <p name="pf" id="portfolio">portfolio</p>
+  </div>
+  <ul class="tutorial2">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+  </ul>
+  <script>
+    // 1. id
+    const tutorial = document.getElementById("tutorial");
+    console.log(tutorial);
+    tutorial.style.background = "#ccc";
+
+    // 2. tag
+    const li = document.getElementsByTagName("li");
+    // for(let i=0; i<li.length; i++){
+    //   li[i].style.color = "orange";
+    // }
+
+    // for in: 객체의 모든 열거 가능한 속성에 대해 반복
+    // for of: [Symbol.itertor] 속성을 가지는 컬렉션 전용 반복문
+    // iterable 객체를 만들어내는 생성자: String, Array, Map, Set, TyppedArray...
+
+    // for of
+    for(let el of li){
+      // el.style.color = "orange";
+      console.log(el);
+    }
+
+    // forEach
+    // li.forEach(el=>{
+    //   el.style.color = "orange";
+    // })
+
+    // li[2] = li.item(2)
+    li.item(2).style.color = "blue";
+
+    const title = document.getElementsByTagName("h1");
+    title[0].style.background = "red";
+    console.log(title);
+
+    // 3. class
+    const firstLi = document.getElementsByClassName("html");
+    // 노란 글씨로 변경
+    firstLi[0].style.color = "yellow";
+
+    // 4. name
+    const portfolio = document.getElementsByName("pf");
+    console.log(portfolio);
+
+    // 5. css기법
+    // (1) querySelector
+    const secondLi = document.querySelector(".css");
+    secondLi.style.fontSize ="30px";
+
+    // (2) querySelectorAll
+    // tutorial안에 있는 li태그들의 폰트 컬러를 green, 배경색을 black으로 변경
+    const tutorial1 = document.querySelectorAll("#tutorial > li");
+    for(let el of tutorial1){
+      el.style.color = "green";
+      el.style.background = "black";
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>03.HTML과의 연계(name)</title>
+  </head>
+  <body>
+    <button onclick="selectByName();">name이 'bbb' 인 객체 선택하기</button>
+    <div>
+      <span name="bbb">1번</span>
+      <span>2번</span>
+      <span id="aaa">3번</span>
+      <span>4번</span>
+      <span name="bbb">5번</span>
+      <span>6번</span>
+    </div>
+    <script type="text/javascript">
+      const selectByName = ()=>{
+        console.log(document.getElementsByName('bbb')[0])
+        document.getElementsByName('bbb').forEach(ele=>ele.style.backgroundColor = 'red')
+      }
+    </script>
+  </body>
+</html>

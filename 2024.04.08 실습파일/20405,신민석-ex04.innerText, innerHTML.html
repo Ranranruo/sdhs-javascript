@@ -1,0 +1,31 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>ex04.innerHTML & innerText & textContent</title>
+</head>
+
+<body>
+  <p>입력창에 HTML 태그를 입력해보세요!</p>
+  <input type="text" id="txt" size="50" name="text">
+  <input type="button" onclick="showText(this)" value="innerHTML 출력">
+  <input type="button" onclick="showText(this)" value="innerText 출력">
+  <input type="button" onclick="showText(this)" value="textContent 출력">
+  <br><br>
+  <div id="result"></div>
+</body>
+<script>
+  const result = document.getElementById("result")
+  const showText = (target) =>{
+    const text = document.getElementById("text").value;
+    console.log(target);
+    const clickAttribute = target.value;
+    if(clickAttribute.includes("innerHTML")){
+      result.innerHTMl += text;
+    }else{
+      result.textContent += text;
+    }
+  }
+</script>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>실습해보기3.if else: 사용자 학점 구하기</title>
+  </head>
+
+  <body>
+    <h3>switch문을 이용한 학점 매기기</h3>
+    <hr />
+    <script>
+      const NAME = prompt('이름을 입력해주세요');
+      let score = prompt('점수를 입력해주세요');
+      while(score > 100 || score < 0) score = prompt('0~100 사이로 점수를 입력해주세요');
+      
+      let grade = '';
+      if(score < 60) grade = 'F';
+      else if(score >= 90) grade = 'A'; 
+      else if(score >= 80) grade = 'B'; 
+      else if(score >= 70) grade = 'C'; 
+      else if(score >= 60) grade = 'D'; 
+
+      document.write(`${NAME}님의 등급은 ${grade} 입니다.`)
+    </script>
+  </body>
+</html>

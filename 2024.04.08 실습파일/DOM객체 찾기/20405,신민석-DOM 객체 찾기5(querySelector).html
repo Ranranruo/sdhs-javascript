@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+  </head>
+  <body>
+    <button onclick="selectByCssSelector();">
+      CSS 선택자로 하나만 선택하기
+    </button>
+    <button onclick="selectByCssSelectorAll();">
+      CSS 선택자로 전체 선택하기
+    </button>
+    <p id="selected"></p>
+    <div>
+      <span class="bbb">1번</span>
+      <span>2번</span>
+      <span id="aaa">3번</span>
+      <span>4번</span>
+      <span class="bbb">5번</span>
+      <span>6번</span>
+    </div>
+    <script type="text/javascript">
+      const selectByCssSelector = ()=> check();
+      const selectByCssSelectorAll = ()=> check('all');
+      const check = (isall) =>{
+        let selector, isloop = true, msg = '입력해주세요';
+        while(isloop){
+          try {
+            selector = prompt(msg);
+            if(selector === null) return;
+            if(selector.indexOf(' ') + 1 || selector === ''){
+              msg = "공백은 입력할 수 없습니다.";
+              continue;
+            }
+            if(!isNaN(selector.charAt(1))){
+              msg = "아이디, 클래스명은 숫자로 시작할 수 없습니다.";
+              continue;
+            }
+            if(!document.querySelector(selector)){
+              msg = "입력하신 선택자는 존재하지 않습니다.";
+              continue;
+            }
+            isloop = false;
+          } catch{ msg = "입력하신 선택자는 존재하지 않습니다."}
+        }
+        set((isall ? document.querySelectorAll(selector) : [document.querySelector(selector)]));
+      }
+      const set = (ele)=> {
+        document.querySelectorAll('span').forEach(ele=>ele.style.backgroundColor = '');
+        for(let item of ele) item.style.backgroundColor = 'red';
+      };
+    </script>
+  </body>
+</html>

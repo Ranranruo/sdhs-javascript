@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>실습해보기4.Node 관계 다루기</title>
+    <style>
+      button {
+        margin: 5px;
+      }
+
+      .title {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>각 버튼을 클릭해보세요</h1>
+    <p class="title" id="first_title">container1</p>
+    <div
+      class="container"
+      id="container1"
+      style="border: 5px solid black; height: 100px"
+    >
+      <button class="btn">1번</button>
+      <button class="btn">2번</button>
+      <button class="btn">3번</button>
+      <!-- <button class="btn">4번</button> -->
+    </div>
+    <p class="title" id="second_title">container2</p>
+    <div
+      class="container"
+      id="container2"
+      style="border: 1px solid black; height: 100px"
+    >
+    </div>
+    <p class="title" id="third_title">container3</p>
+    <div
+      class="container"
+      id="container3"
+      style="border: 1px solid black; height: 100px"
+    >
+    </div>
+    <p class="title" id="third_title">container4</p>
+    <div
+      class="container"
+      id="container4"
+      style="border: 1px solid black; height: 100px"
+    >
+    </div>
+    <script type="text/javascript">
+      const btns = document.querySelectorAll(".btn");
+      const result = document.createElement("p");
+      btns.forEach(el=>{
+        el.addEventListener("click", (e)=> move(e.target))
+      })
+      const move = (el) => {
+        // 클릭한 버튼의 부모 컨테이너
+        const con = el.parentNode;
+        console.log(con);
+
+        const cons = [...document.querySelectorAll(`.${con.className}`)];
+        
+        // 클릭한 버튼을 다음 컨테이너로 이동
+        // => 현재 인덱스 + 1 (배열 인덱스 초과 시 처음 인덱스로 초기화)
+        // 현재 인덱스
+        console.log(cons.indexOf(con) + 1);
+        // 배열의 마지막 인덱스: 전체길이(배열참조변수명.length)-1
+        const curIdx = (cons.indexOf(con) + 1) % cons.length;
+        // 클릭한 버튼을 다음 컨테이너로 이동
+        cons[curIdx].appendChild(el);
+
+        // 모든 버튼 이동 시 원래 버튼이 있었던 컨테이너 문구 출력
+        // 기준: 현재 컨테이너의 하위 자식요소의 갯수 === 버튼 갯수 0
+        // 다음: 다음 컨테이너의 하위 자식요소의 갯수 === 버튼의 전체 갯수
+        // 하위 자식 요소 갯수: 1.부모노드.children.length, 2.부모노드.childElementCount
+        if(cons[curIdx].childElementCount === btns.length){
+          // 클래스명이 title인 태그의 밑에 형제태그로 삽입
+          // => after(): 요소를 혈제 관계로 삽입
+          // => insertAdjacentElement("position", element): 지정된 위치에 새로운 요소를 삽입
+          // position 4가지 종류
+          // - beforebegin: 부모 요소 앞에 삽입
+          // - afterbegin: 부모 요소 맨 첫번째 자식으로 삽입
+          // - beforeend: 부모 요소 맨 마지막 자식으로 삽입
+          // - afterend: 부모 요소 맨 뒤에 삽입
+
+          // 클릭한 버튼의 부모 컨테이너의 태그의 밑에 형제태그로 삽입
+          const title = con.previousElementSibling;
+          result.textContent = `${cons[curIdx].id}(으)로 모든 버튼 이동 완료`;
+          title.after(result);
+        }
+      }
+      // 클릭한 버튼을 다음 컨테이너로 이동
+      // 모든 버튼 이동시 => 이전 컨테이너에 문구 출력
+    </script>
+  </body>
+</html>

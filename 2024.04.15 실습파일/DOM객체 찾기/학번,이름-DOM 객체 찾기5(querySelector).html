@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Insert title here</title>
+</head>
+
+<body>
+  <button onclick="selectByCssSelector();">
+    CSS 선택자로 하나만 선택하기
+  </button>
+  <button onclick="selectByCssSelectorAll();">
+    CSS 선택자로 전체 선택하기
+  </button>
+  <p id="selected"></p>
+  <div>
+    <span class="bbb">1번</span>
+    <span>2번</span>
+    <span id="aaa">3번</span>
+    <span>4번</span>
+    <span class="bbb">5번</span>
+    <span>6번</span>
+  </div>
+  <script type="text/javascript">
+    // 조건: 1) 공백, 문자사이 공백 => 공백은 입력할 수 없습니다. 다시 입력해주세요.
+    //       2) 없는 선택자일 경우 => span 태그들 중 ${입력한} 선택자는 존재하지 않습니다. 다시 입력해주세요.
+    //       3) 아이디, 클래스명은 숫자로 시작할 수 없음 => "선택자는 숫자로 시작할 수 없습니다. 다시 입력해주세요.
+  </script>
+</body>
+
+</html>

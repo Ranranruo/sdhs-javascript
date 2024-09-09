@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>실습해보기2.HTML태그 동적 제어</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+
+      h2 {
+        text-align: center;
+        margin-top: 30px;
+        color: #333;
+      }
+      #buttons-container{
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+      #buttons-container > button{
+        padding: 1em 2em;
+        border-radius: 10px;
+        border: none;
+        color: white;
+        background-color: black;
+      }
+      #list{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        padding: 1em 0;
+      }
+      #list > li{
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        width: 300px;
+        padding: 1em 0em;
+        border-radius: 5px;
+        box-shadow: 1px 1px 5px rgba(0,0,0,.3);
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>동적으로 HTML 태그 생성 및 제거</h2>
+
+    <div id="buttons-container">
+      <button id="addItemBtn">Add Item</button>
+      <button id="removeItemBtn">Remove Last Item</button>
+    </div>
+
+    <ul id="list">
+      <!-- 여기에 동적으로 추가될 아이템이 나열 -->
+    </ul>
+
+    <script>
+      const $ul = document.querySelector('#list');
+      const $$btns = document.querySelectorAll('#buttons-container > button');
+      $$btns.forEach(el => {
+        el.addEventListener("click",(e)=>{
+          const id = e.target.id;
+          if(id == "addItemBtn"){
+            const isFull = document.querySelector(".full");
+            if(isFull != null) isFull.remove();
+            const length = $ul.children.length;
+            if(length >= 10) return alert("10개가 끝이에요.");
+            const $li = document.createElement("li");
+            const text = document.createTextNode(`New item${length + 1}`);
+            $li.classList.add(`item${length + 1}`);
+            $li.appendChild(text);
+            $ul.appendChild($li);
+          } else {
+            $ul.lastChild.remove();
+            const length = $ul.children.length;
+            if(length <= 0){
+              const $full = document.createElement("h1");
+              const text = document.createTextNode("모두 삭제 됬어요.");
+              $full.classList.add("full");
+              $ul.textContent = "";
+              $full.appendChild(text);
+              $ul.appendChild($full);
+            }
+          }
+        })
+      });
+    </script>
+  </body>
+</html>

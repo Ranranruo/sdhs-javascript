@@ -1,0 +1,137 @@
+:root{
+    /* header 배경 */
+    --color--header: 240,240,240;
+
+    /* 흰색계열 */
+    --color--white01: 255, 255, 255;
+    --color--white02: 250, 250, 250;
+    --color--white03: 245, 245, 245;
+    --color--white04: 240, 240, 240;
+
+    /* 검은색계열 */
+    --color--black01: 0, 0, 0;
+
+    /* 기타 색깔 */
+    --color--btn: 133, 173, 249;
+    --color--x: 255, 64, 64;
+}
+/* reset */
+*{
+    padding: 0;
+    margin: 0;
+    color: inherit;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+/* header */
+header{
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(var(--color--header));
+}
+.container{
+    display: flex;
+    flex-direction: column;
+}
+/* banner */
+.banner{
+    height: 300px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+    color: rgb(var(--color--white01));
+    background-image: url("./images/banner.jpg");
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.banner::before{
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(var(--color--black01),.5);
+}
+.banner :where(.title, .sub){
+    z-index: 10;
+    text-align: center;
+}
+.banner .title{
+    font-size: 30px;
+}
+/* contents */
+.contents{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.contents > p{
+    padding: 2em;
+    color: rgb(var(--color--black01));
+    font-weight: 600;
+    font-size: 24px;
+}
+.contents .todoForm{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 100px;
+}
+.contents .todoForm > :where(.todoText, .addBtn){
+    padding: .5em 1em;
+    border-radius: 5px;
+    font-size: 18px;
+    outline: none;
+    border: none;
+}
+.contents .todoForm .todoText{
+    width: 40%;
+    min-width: 250px;
+    background-color: rgb(var(--color--white03));
+    box-shadow: 0px 3px 1px rgba(var(--color--black01),.2);
+}
+.contents .todoForm .addBtn{
+    color: #fff;
+    background-color: rgb(var(--color--btn));
+}
+.todoList{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.todoList .todo{
+    display: flex;
+    justify-content: space-between;
+    padding: .5em 1em;
+    font-size: 18px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0px 2px 1px rgba(var(--color--black01),.2);
+}
+.todoList .todo :where(.task, .trash){
+    cursor: pointer;
+    transition: .15s;
+}
+.todoList .todo .task{
+    color: rgb(var(--color--black01));
+}
+/* todo active시 효과 */
+.todoList .todo.active .task{
+    color: #aaa;
+    text-decoration: line-through;
+}
+.todoList .todo .trash{
+    font-weight: 600;
+    color: #cecece;
+}
+/* x hover시 효과 */
+.todoList .todo .trash:hover{
+    color: rgb(var(--color--x));
+}

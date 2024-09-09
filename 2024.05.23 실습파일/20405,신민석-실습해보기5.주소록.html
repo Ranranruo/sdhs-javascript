@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>주소록</title>
+    <style>
+      body {
+        transition: all 0.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>주소록 예제</h2>
+    <form>
+      이름: <input type="text" name="name" /><br />
+      전화번호: <input type="text" name="tel" /><br /><br />
+      <input data-name="save" type="button" value="저장" />
+      <input data-name="reset" type="button" value="리셋" />
+      <input data-name="mode" type="button" value="다크모드" />
+    </form>
+    <hr />
+    <h3>주소록 목록</h3>
+    <ul id="addrlist"></ul>
+    <script>
+      const $$btns = document.querySelectorAll("input[type=button]");
+      const $form = document.querySelector("form");
+      const $body = document.querySelector("body");
+      const $addrlist = document.getElementById("addrlist");
+      $$btns.forEach(el=>
+        el.addEventListener("click", (e)=>{
+          if(e.target.value == "저장"){
+            for(input of $form)
+              if(input.value.replaceAll(" ", "") == "")
+                return alert(`${input.name}이 비어있어요`);
+            const $li = document.createElement("li");
+            $li.textContent = `${$form.name.value}, ${$form.tel.value}`;
+            $addrlist.appendChild($li);
+          }
+          if(e.target.value == "리셋")
+            $addrlist.innerHTML = "";
+          if(e.target.value == "다크모드" || e.target.value == "화이트모드"){
+            e.target.value = (e.target.value == "다크모드") ? "화이트모드" : "다크모드";
+            $body.style.backgroundColor = ($body.style.backgroundColor == "") ? "black" : "";
+            $body.style.color = ($body.style.color == "") ? "white" : "";
+          }
+        })
+      )
+    </script>
+  </body>
+</html>

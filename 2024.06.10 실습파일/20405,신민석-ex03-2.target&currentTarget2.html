@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ex03-1</title>
+  <style>
+    ul {
+      line-height: 30px;
+      font-size: 20px;
+    }
+
+    li.active {
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>target & 버블링</h1>
+  <div class="content">
+  </div>
+  <script>
+    const $body = document.body;
+    const $content = document.querySelector(".content");
+    const $ul = document.createElement("ul");
+    const numArr = ["First", "Second", "Third"];
+    
+    $ul.style.listStyle = "decimal";
+    $ul.addEventListener("click", (e)=>{
+      e.target.classList.toggle("active");
+    });
+    $content.append($ul);
+    for(num of numArr){
+      const $li = document.createElement("li");
+      $li.classList.add(num);
+      $li.innerText = num;
+      $ul.append($li);
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>실습해보기2.classList</title>
+  <style>
+    body {
+      background-color: aliceblue;
+    }
+
+    .html.active {
+      background-color: aqua;
+      font-size: 20px;
+    }
+
+    .html.reactive {
+      color: hotpink;
+      font-size: 30px;
+    }
+
+    .html.reactive::marker {
+      color: hotpink;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 class="title">ClassList 연습</h1>
+  <div class="container">
+    <ul id="tutorial">
+      <li class="html">HTML</li>
+      <li class="css">CSS</li>
+      <li class="css3">CSS3</li>
+      <li class="javascript">JavaScript</li>
+      <li class="jquery">jQuery</li>
+    </ul>
+  </div>
+  <input type="button" value="add" onclick="handle(this)">
+  <input type="button" value="toggle" onclick="handle(this)">
+  <input type="button" value="replace" onclick="handle(this)">
+  <input type="button" value="contains" onclick="handle(this)">
+  <input type="button" value="remove" onclick="handle(this)">
+  <script>
+    const $li = document.querySelector('#tutorial > li:nth-of-type(1)');
+    function handle(dom){
+      const value = dom.value;
+      if(value === "replace")
+        $li.classList.replace("active", "reactive");
+      else if(value === "contains")
+        alert([...$li.classList][1] ? `${[...$li.classList]} 클래스가 있어요` : '클래스가 추가되지 않았어요');
+      else if(value === 'remove')
+        $li.classList = 'html';
+      else
+        $li.classList[value]("active");
+    }
+  </script>
+</body>
+
+</html>

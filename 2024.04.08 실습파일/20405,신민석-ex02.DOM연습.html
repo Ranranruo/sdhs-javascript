@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>ex02.자바스크립트 DOM연습</title>
+</head>
+
+<body>
+  <h1 id="first">HTML 요소(element)를 찾는방법</h1>
+  <h2>first h2</h2>
+  <h2>second h2</h2>
+  <ul id="container_1" class="container1">
+    <li id="li1">HTML</li>
+    <li class="li2">CSS</li>
+    <li id="li3">JavaScript</li>
+  </ul>
+  <ol id="container_2" class="container2">
+    <li>HTML</li>
+    <li>CSS</li>
+    <li>JavaScript</li>
+  </ol>
+  <h2>thord h2</h2>
+  <script type="text/javascript">
+    document.getElementById('first').style.color='red';
+    const $$li = document.getElementsByTagName('li');
+    // for
+    for(let i = 0; i < $$li.length; i++){
+      $$li[i].style.background = 'lightgreen';
+    }
+
+    // for of
+    for(let item of $$li){
+      item.style.background = "lightgreen";
+    }
+
+    // forEach
+    // 배열 전용 반복문
+    // 유사배열 => 배열로 변환
+    // 1) Array.from(): 배열로 반환하는 메서드
+    Array.from($$li).forEach(item => {
+       item.style.background = "lightgreen";
+     });
+    
+    // 2) Spread Operator
+    // ...
+    const $$li2 = [...$$li];
+    console.log("$$li2", $$li2);
+    $$li2.forEach(item => {
+       item.style.background = "lightgreen";
+     });
+     // 3. CSS선택자로 h2태그의 글씨 색상을 pink로 변경
+     const $$h2 = document.querySelector("h2");
+
+     $$h2.forEach(el=>el.style.color="pink")
+  </script>
+</body>
+
+</html>

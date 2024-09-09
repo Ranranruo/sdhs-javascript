@@ -1,0 +1,29 @@
+<html>
+  <style>
+    .change {
+      background-color: red;
+    }
+  </style>
+  <head>
+    <meta charset="UTF-8" />
+    <title>02.HTML과의 연계(tag)</title>
+  </head>
+
+  <body>
+    <button onclick="selectByTagName();">span 객체들 선택하기</button>
+    <div>
+      <span name="bbb">1번</span>
+      <span>2번</span>
+      <span id="aaa">3번</span>
+      <span>4번</span>
+      <span name="bbb">5번</span>
+      <span>6번</span>
+    </div>
+    <script type="text/javascript">
+      const selectByTagName = ()=>{
+        const $$span = document.getElementsByTagName('span');
+        for(let ele of $$span) ele.style.backgroundColor = 'red';
+      }
+    </script>
+  </body>
+</html>

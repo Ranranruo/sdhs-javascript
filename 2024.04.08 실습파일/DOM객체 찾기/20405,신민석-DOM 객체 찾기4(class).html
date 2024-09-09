@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>04.HTML과의 연계(class)</title>
+  </head>
+  <body>
+    <button onclick="selectByClassName();">
+      class가 'bbb' 인 객체 선택하기
+    </button>
+    <div>
+      <span class="bbb">1번</span>
+      <span>2번</span>
+      <span id="aaa">3번</span>
+      <span>4번</span>
+      <span class="bbb">5번</span>
+      <span>6번</span>
+    </div>
+    <script type="text/javascript">
+      const selectByClassName = ()=>{
+        Array.from(document.getElementsByClassName('bbb')).forEach(ele=>ele.style.backgroundColor = 'red')
+      }
+    </script>
+  </body>
+</html>

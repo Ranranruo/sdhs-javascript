@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>실습해보기2.구구단</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .questionBox,
+    .resultBox {
+      margin: 10px 0;
+    }
+
+    .answerInput {
+      padding: 10px;
+      font-size: 16px;
+      width: 80%;
+      margin-bottom: 10px;
+    }
+
+    .submitBtn,
+    .retryBtn {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 5px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+    }
+
+    .submitBtn:hover,
+    .retryBtn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+  <form class="container">
+    <h1>구구단을 맞춰 보아요</h1>
+    <div class="questionBox"></div>
+    <input type="text" class="answerInput" placeholder="정답을 입력하세요." >
+    <input type="submit" id="submitAnswer" class="submitBtn" value="제출">
+    <div id="result" class="resultBox"></div>
+    <button id="retry" class="retryBtn" style="display: none;">다시 도전</button>
+    </div>
+    <script>
+      // utill function
+      const rand = (startNum, length) => Math.floor(Math.random() * length + startNum);
+      // utill variable
+      const $questionBox = document.querySelector(".questionBox");
+      const $result = document.getElementById("result");
+      const $retry = document.getElementById("retry");
+      const [$form] = document.forms;
+      const $answer = document.querySelector("form input[type=text]");
+
+      const state = {
+        num1: null,
+        num2: null,
+        answer: null,
+      };
+      const setResult = (isRight) => {
+        if(isRight){
+          $result.innerText = "맞췄어요!";
+          $result.style.color = "lightgreen";
+          $retry.style.display = "none";
+        } else {
+          $result.innerText = "틀렸어요...";
+          $result.style.color = "red";
+          $retry.style.display = "flex";
+        }
+      }
+      const setProblem = () => {
+        state.num1 = rand(2, 8);
+        state.num2 = rand(1, 9);
+        state.answer = state.num1 * state.num2;
+        $questionBox.innerText = `${state.num1} X ${state.num2} = ?`;
+      }
+      const check = (answer) =>{
+        const isRight = state.answer == answer;
+        setResult(isRight);
+        setProblem();
+      }
+      $form.addEventListener("submit", (e)=>{
+        e.preventDefault();
+        if(e.submitter.id == "retry") return location.reload();
+        const Answer = Number($answer.value);
+        if(!Answer) return alert("잘못 입력하셨어요");
+
+        $answer.value = "";
+        check(Answer);
+      });
+      setProblem();
+      </script>
+</body>
+
+</html>

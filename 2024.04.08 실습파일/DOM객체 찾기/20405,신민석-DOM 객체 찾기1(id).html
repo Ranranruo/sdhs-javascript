@@ -1,0 +1,31 @@
+<html>
+  <style>
+    .change {
+      background-color: red;
+    }
+  </style>
+  <head>
+    <meta charset="UTF-8" />
+    <title>01.HTML과의 연계(id)</title>
+  </head>
+  <body>
+    <button onclick="selectById()">id가 'aaa'인 객체 선택하기</button>
+    <div>
+      <span name="bbb">1번</span>
+      <span>2번</span>
+      <span id="aaa">3번</span>
+      <span>4번</span>
+      <span name="bbb">5번</span>
+      <span>6번</span>
+    </div>
+    <script type="text/javascript">
+      // 선언문 vs 표현식
+      const selectById = () => {
+        // id가 aaa인 태그를 가져옴
+        const $aaa = document.getElementById('aaa');
+        // id가 aaa인 태그의 배경색상을 red로 설정
+        $aaa.style.backgroundColor = 'red';
+      };
+    </script>
+  </body>
+</html>

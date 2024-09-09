@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>ex03.css 스타일 동적 변경</title>
+  <style>
+    h3 {
+      text-align: center;
+    }
+
+    .sampleText {
+      width: 600px;
+      border: 2px solid #ccc;
+      font-size: 20px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .wrap {
+      width: 100%;
+      margin-top: 20px;
+      display: flex;
+      height: auto;
+      justify-content: center;
+    }
+
+    span {
+      margin: 0 10px 0 20px;
+    }
+
+    select {
+      width: 150px;
+    }
+
+    input {
+      margin: 0 0 0 20px;
+    }
+
+    input:nth-of-type(1),
+    input:last-child {
+      padding: 5px 20px;
+      border-radius: 20px;
+      border: none;
+      color: #fff;
+      background: skyblue;
+      cursor: pointer;
+    }
+
+    input:nth-of-type(1):hover,
+    input:last-child:hover {
+      background: rgb(4, 124, 172);
+      transition: all .5s ease;
+    }
+  </style>
+</head>
+
+<body>
+  <h3>CSS 스타일 동적 변경</h3>
+  <hr>
+  <p class="sampleText">This is sample text</p>
+  <div class="wrap">
+    <span>색상 선택:</span>
+    <select name="color" id="colorSelect">
+      <option value="red">빨강</option>
+      <option value="green">초록</option>
+      <option value="blue">파랑</option>
+      <option value="orange">주황</option>
+      <option value="yellow">노랑</option>
+    </select>
+
+    <span>폰트크기 선택:</span>
+    <select name="fontSize" id="fontSelect">
+      <option value="10px">10px</option>
+      <option value="20px">20px</option>
+      <option value="30px" selected>30px</option>
+      <option value="40px">40px</option>
+      <option value="50px">50px</option>
+    </select>
+    <input type="button" value="선택 완료" onclick="change()">
+    <input type="button" value="초기화" onclick="reset()">
+  </div>
+  <script>
+    const $$select = document.querySelectorAll('select');
+    const $text = document.querySelector('.sampleText');
+    const change =()=>{
+      $$select.forEach(el=>{
+        const [key, value] = [el.name, el.value];
+        $text.style[key] = value;
+        console.log($text.style);
+      })
+    }
+    const reset = () => {
+      $text.style.color = '';
+      $text.style.fontSize = '';
+    }
+  </script>
+</body>
+
+</html>

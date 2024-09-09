@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>실습해보기4.Node 관계 다루기</title>
+    <style>
+      button {
+        margin: 5px;
+      }
+
+      .title {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>각 버튼을 클릭해보세요</h1>
+    <p class="title" id="first_title">container1</p>
+    <div
+      class="container"
+      id="container1"
+      style="border: 5px solid black; height: 100px"
+    >
+      <button class="btn">1번</button>
+      <button class="btn">2번</button>
+      <button class="btn">3번</button>
+      <!-- <button class="btn">4번</button> -->
+    </div>
+    <p class="title" id="second_title">container2</p>
+    <div
+      class="container"
+      id="container2"
+      style="border: 1px solid black; height: 100px"
+    ></div>
+    <script type="text/javascript"></script>
+  </body>
+  <script>
+    const $$btns = document.querySelectorAll(".btn");
+    const $$con = document.querySelectorAll(".container");
+    const $$title = document.querySelectorAll(".title");
+    const $title1 = document.querySelector("#first_title");
+    
+    const $p = document.createElement("p");
+    $p.classList.add("every");
+  
+    $$btns.forEach(el=>
+      el.addEventListener("click", (e)=>{
+        const id = e.target.parentElement.id;
+        const $nextParent = document.querySelector(`#container${(id.includes("1") ? "2" : "1")}`);
+        $nextParent.appendChild(e.target);
+        check(id);
+      })
+    )
+    const check = (id) => {
+      const $con = document.querySelector(`#${id}`);
+      if($con.childElementCount <= 0){
+        $p.innerText = `container${id.includes("1") ? "2" : "1"} (으)로 모두 이동되었습니다.`;
+        $$title[id.includes("1") ? "0" : "1"].after($p);
+      } else
+      $p.remove();
+    };
+  </script>
+</html>
