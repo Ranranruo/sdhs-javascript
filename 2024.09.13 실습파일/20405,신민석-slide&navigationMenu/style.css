@@ -1,0 +1,111 @@
+*{
+  margin: 0; padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  color: inherit;
+}
+body {
+  margin: 20px;
+  line-height: 1;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1em;
+  background-color: #f1f1f1;
+  color: #555;
+  display: flex; flex-direction: column; gap: 30px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.title{
+  display: flex; justify-content: flex-start; align-items: center;
+  font-weight: 100;
+  height: 80px;
+}
+.container{
+  display: flex; flex-direction: column; gap: 80px;
+}
+.container nav ul{
+  position: relative;
+  display: flex; gap: 20px;
+}
+.container nav ul::after{
+  content: '';
+  background-color: rgba(0, 0, 0, 0.2);
+  position: absolute; bottom: -20px; left: calc((100vw - 100%)/2 * -1);
+  width: 100vw; height: 1px;
+}
+.container nav ul li{
+  display: flex;
+}
+.container nav ul li a{
+  padding: .5em 1em;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+.container nav ul li a.active{
+  color: #fff; background-color: rgb(103, 199, 35);
+  border: none;
+}
+.section-container{
+  display: flex; flex-direction: column; gap: 50px; align-items: center;
+}
+.section-container .welcome-area{
+  width: 100%;
+  display: flex; justify-content: center;
+}
+.section-container .container{
+  position: relative;
+  width: 85%; max-width: 1421px; min-width: 500px;
+  aspect-ratio: 16/ 9;
+  min-height: 500px; max-height: 700px;
+}
+.section-container .container .image-slide{
+  width: 100%;
+  opacity: 0;
+  z-index: 1;
+  transition: 1.5s;
+}
+.section-container .container .image-slide.active{
+  z-index: 2;
+  opacity: 1;
+}
+.section-container .container .image-slide img{
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+.section-container .container .swiper-pagination{
+  display: flex; justify-content: space-between;
+  position: absolute; top: 50%; translate: 0 -50%;
+  width: 100%;
+  z-index: 10;
+}
+.section-container .container .swiper-pagination button{
+  padding: 1em;
+  color: #555; background-color: rgba(255, 255, 255, .8);
+  border: none;
+}
+.section-container .container .dots{
+  display: flex; gap: 10px;
+  z-index: 2;
+  position: absolute; bottom: 0; left: 50%; translate: -50% 0;
+  padding: .5em 1em; margin-bottom: 10px;
+}
+.section-container .container .dots .dot{
+  border-radius: 100px;
+  width: 15px; aspect-ratio: 1/1;
+  background-color: rgba(255, 255, 255, .4);
+}
+.section-container .container .dots .dot.active{ background-color: rgba(255, 255, 255, 1);}
+.description{
+  width: 80%;
+  display: none; flex-direction: column; justify-content: center; align-items: center; gap: 20px;
+}
+.description.on { display: flex; }
+.description .menu_title{ font-size: 24px;}
+.description .contents{ font-size: 18px;}

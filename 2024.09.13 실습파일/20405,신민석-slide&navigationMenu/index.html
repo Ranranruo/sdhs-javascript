@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Select Menu & Slide</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <h1 class="title">JavaScript Menu</h1>
+  <div class="container">
+    <nav>
+      <ul>
+        <li class="tab on"><a class="active" href="">HTML</a></li>
+        <li class="tab"><a href="">CSS</a></li>
+        <li class="tab"><a href="">JavaScript</a></li>
+        <li class="tab"><a href="">React</a></li>
+      </ul>
+    </nav>
+    <div class="section-container">
+      <div class="welcome-area">
+        <div class="container">
+          <div class="image-slide fade active">
+            <img src="img/image1.jpg"/>
+          </div>
+          <div class="image-slide fade">
+            <img src="img/image2.jpg" />
+          </div>
+          <div class="image-slide fade">
+            <img src="img/image3.jpg" />
+          </div>
+          <div class="image-slide fade">
+            <img src="img/image4.jpg" />
+          </div>
+
+
+          <div class="swiper-pagination">
+            <button class="image-prev" id="imagePrev">&#10094;</button>
+            <button class="image-next" id="imageNext">&#10095;</button>
+          </div>
+
+
+          <div class="dots">
+            <span class="dot active" id="firstDot"></span>
+            <span class="dot" id="secondDot"></span>
+            <span class="dot" id="thirdDot"></span>
+            <span class="dot" id="forthDot"></span>
+          </div>
+
+          <div class="moving-btn">
+          </div>
+        </div>
+      </div>
+      <div class="description HTML on">
+        <p class="menu_title">HTML</p>
+        <p class="contents">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+          incididunt ut labore
+          et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+      <div class="description CSS">
+        <p class="menu_title">CSS</p>
+        <p class="contents">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum reprehenderit,
+          optio fugit ullam magni repudiandae cumque at porro repellendus officia perspiciatis,
+          vitae maiores deleniti, nulla ratione. Vero aut aspernatur dolorem.</p>
+      </div>
+      <div class="description JavaScript">
+        <p class="menu_title">JavaScript</p>
+        <p class="contents">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, aut. Vel, illum dolores!
+          Velit in quidem recusandae nemo laborum earum quia, culpa adipisci quam porro alias explicabo rerum
+          officiis illum!
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit.
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+        </p>
+      </div>
+      <div class="description React">
+        <p class="menu_title">React</p>
+        <p class="contents">Aenean fermentum consequat blandit. Mauris egestas velit eget euismod semper.
+          Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent pharetra molestie ante sed
+          pharetra.
+          Morbi libero orci, cursus eget posuere sed, consectetur a quam. Integer vel leo et purus convallis
+          faucibus eget sit amet nisl.
+          Mauris cursus nunc et semper gravida. Vivamus egestas eros pellentesque, sodales nunc quis, ultrices
+          est.
+          Suspendisse vitae tortor porttitor, eleifend massa et, volutpat felis. Morbi fermentum posuere nulla id
+          aliquet.
+          Cras commodo ligula vitae iaculis pellentesque. Cras a tellus ac elit laoreet sollicitudin.
+          Sed pharetra tellus tortor, mattis luctus massa pellentesque et.
+        </p>
+      </div>
+    </div>
+</body>
+
+</html>
