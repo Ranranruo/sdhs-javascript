@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    ex01.offsetHeight and clientHeight
+  </title>
+
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    h1 {
+      color: green;
+    }
+
+    #box {
+      height: 300px;
+      width: 400px;
+      padding: 20px;
+      margin: 20px;
+      border: 20px solid black;
+      overflow-x: scroll;
+      overflow-y: scroll;
+      text-align: center;
+      font-size: 20px;
+    }
+
+    #box.active {
+      transform: scale(0.5);
+      transition: 0.5s ease-in-out;
+    }
+
+    #result {
+      font-size: 20px;
+      font-weight: bold;
+      color: green;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 15px;
+      font-weight: bolder;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>OffsetHeight and ClientHeight</h1>
+
+    <h2>차이점 살펴보기</h2>
+
+    <button id="checkBtn">
+      Check Size
+    </button>
+
+    <div id="box">
+      <h2>요소의 크기</h2>
+      height: 300px</br>
+      width: 400px</br>
+      padding: 20px</br>
+      margin: 20px</br>
+      border: 20px</br></br>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      Labore unde debitis, soluta at, vitae molestiae possimus
+      id vero impedit ad dolores officiis quis tempora?
+      Nisi hic a harum pariatur vel.
+      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      Labore unde debitis, soluta at, vitae molestiae possimus
+      id vero impedit ad dolores officiis quis tempora?
+      Nisi hic a harum pariatur vel.
+    </div>
+
+    <p id="result"></p>
+
+  </div>
+  <script>
+    const $box = document.querySelector("#box");
+    const $result = document.querySelector("#result");
+
+    document.querySelector("#checkBtn").addEventListener("click", ()=> {
+      let text = "";
+      // offset 속성: 눈에 보이는 content + padding + border + scrollbar
+      text += "offset 속성<br>";
+      text += `offsetWidth = content + padding + border = ${$box.offsetWidth}px<br>`;
+      text += `offsetHeight = content + padding + border = ${$box.offsetHeight}px<br><br>`;
+      
+      // client 속성: 눈에 보이는 content + padding
+      text += "client 속성<br>";
+      text += `clientWidth = content + padding = ${$box.clientWidth}px<br>`;
+      text += `clientHeight = content + padding = ${$box.clientHeight}px<br><br>`;
+
+      result.innerHTML = text;
+    });
+
+    // scroll 속성: 눈에 보이지 않는 영역까지 포함한 전체 content + padding
+    $box.addEventListener("scroll", ()=>{
+      // 1. scrollHeight 2. 스크롤의 현재 위채(scrollTop), 3. 현재 화면 영역(clien)
+      // console.log("box scrollHeight: ", $box.scrollHeight); 562
+      // Math(ceil: 올림, round:반올림, floor:내림)
+      // console.log("box scrollValue: ", Math.floor($box.scrollTop)); 239
+      // console.log("box clientHeight", $box.clientHeight); 323
+
+      // box의 스크롤이 최하단에 닿았을 때 "is bottom" 경고창 출력
+      if($box.scrollHeight - $box.clientHeight == $box.scrollTop) alert("is bottom");
+
+      // 티쳐
+      let scrollValue = Math.ceil($box.scrollHeight - $box.scrollTop);
+
+      // 현재 화면 영역 >= (전체 문서의 크기 - 현재 스크롤 값)
+      if($box.clientHeight >= scrollValue){
+        alert("is bottom");
+      }
+    });
+  </script>
+</body>
+
+</html>

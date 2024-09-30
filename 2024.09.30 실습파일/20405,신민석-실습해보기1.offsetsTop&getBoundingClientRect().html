@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>offsetTop vs getBoundingClientRect</title>
+  <style>
+    body {
+      font-family: "Roboto", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      color: #333;    }
+
+    h1 {
+      margin-top: 50px;
+      color: #5a5dff;
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    .spacer {
+      height: 1200px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .card {
+      margin-bottom: 40px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .element {
+      position: relative;
+      height: 150px;
+      background-color: #5a5dff;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .element:nth-child(even) {
+      background-color: #ff5a5d;
+    }
+
+    .info {
+      margin-top: 10px;
+      font-size: 1rem;
+      padding: 10px;
+      background-color: #fafafa;
+      border-radius: 8px;
+    }
+
+    .info p {
+      margin: 5px 0;
+      font-size: 1rem;
+      color: #555;
+    }
+
+    #output {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>offsetTop vs getBoundingClientRect</h1>
+    <div class="spacer"></div>
+
+    <div class="card">
+      <div class="element" id="element1">Element 1</div>
+      <div class="info">
+        <p id="offsetTopValue1"></p>
+        <p id="getBoundingClientRectValue1"></p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="element" id="element2">Element 2</div>
+      <div class="info">
+        <p id="offsetTopValue2"></p>
+        <p id="getBoundingClientRectValue2"></p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="element" id="element3">Element 3</div>
+      <div class="info">
+        <p id="offsetTopValue3"></p>
+        <p id="getBoundingClientRectValue3"></p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="element" id="element4">Element 4</div>
+      <div class="info">
+        <p id="offsetTopValue4"></p>
+        <p id="getBoundingClientRectValue4"></p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const $container = document.querySelector(".container");
+    const $$card = $container.querySelectorAll(".card");
+    window.addEventListener("scroll", ()=>{
+      $$card.forEach((el, idx)=>{
+        idx++;
+        el.querySelector("#offsetTopValue" + idx).innerText = "offsetTopValue: "+el.offsetTop;
+        el.querySelector("#getBoundingClientRectValue" + idx).innerText = "getBoundingClientRectValue: "+Math.floor(el.getBoundingClientRect().top);
+      })
+    })
+  </script>
+</body>
+
+</html>

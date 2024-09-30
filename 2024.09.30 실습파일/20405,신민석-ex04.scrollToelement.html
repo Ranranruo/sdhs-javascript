@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ex04.Scroll Position Example</title>
+  <style>
+    body {
+      height: 2000px;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .scroll-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .scroll-value {
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 20px 40px;
+      border-radius: 10px;
+      font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+
+    #target-element {
+      display: block;
+      margin-top: 1100px;
+      /* margin-top: 요소의 실제 위치를 변경 */
+      /* trasnform: translateY(1100px); */
+      /* transform: translate: 시각적으로만 요소를 이동,
+      요소의 실제 위치나 문서 내에서 차지하는 공간에는 영향을 주지 않음 */
+      height: 100px;
+      background-color: lightblue;
+      text-align: center;
+      line-height: 100px;
+      font-size: 20px;
+    }
+
+    #scroll-button {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 20;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="scroll-container">
+    <div class="scroll-value">Scroll Y: 0px</div>
+  </div>
+
+  <!-- 스크롤 이동 대상 -->
+  <div id="target-element">Scroll Target</div>
+
+  <!-- 스크롤 이동 버튼 -->
+  <button id="scroll-button">Scroll to Target</button>
+
+  <script>
+    // window.scrollTo(x, y)
+    const $target = document.getElementById("target-element");
+    document.querySelector("#scroll-button").addEventListener("click", ()=>{
+      // window.scrollTo(0, $target.offsetTop);
+      console.log(window.scrollY - $target.getBoundingClientRect().top)
+      // window.scrollTo(0, window.scrollY - $target.getBoundingClientRect().top)
+      // window.scrollTo(0, $target.getBoundingClientRect().top)
+    });
+  </script>
+</body>
+
+</html>

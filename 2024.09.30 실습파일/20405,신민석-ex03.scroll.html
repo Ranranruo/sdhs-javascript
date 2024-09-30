@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ex03.Scroll Position Example</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 2000px;
+      font-family: Arial, sans-serif;
+    }
+
+    .scroll-container {
+      position: fixed;
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none;
+      z-index: 10;
+      gap: 30px;
+    }
+
+    .scroll-container>div {
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 20px 40px;
+      border-radius: 10px;
+      font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="scroll-container">
+    <div class="scroll-height">Scroll Height: 0px</div>
+    <div class="scroll-value">Scroll Y: 0px</div>
+  </div>
+
+  <script>
+    const $scrollHeight = document.querySelector(".scroll-height");
+    $scrollHeight.innerText = `Scroll Height: ${document.body.scrollHeight}px`;
+
+    /**
+     * 스크롤 위치 관련 속성
+     * 1. window.scrollY: 현재 문서의 상단에서부터 현재 스크롤된 세로 위치를 픽셀 단위로 반환(읽기 전용 속성)
+     * - 대상: window 객체
+     * 2. window.pageYOffset: 오래된 속성이지만 대부분의 부라우저에서 지원되며, window.scrollY와 같은 값을 반환(읽기 전용 속성)
+     * - 대상: window 객체
+     * 3. element.scrollTop: 특정 스크롤 가능한 요소 내에서의 스크롤된 세로 위치를 픽셀 단위로 반환하거나 설정할 수 있음(읽기, 쓰기 모두 가능)
+     * 대상: 특정 DOM 요소
+    */
+
+    const updateScrollPosition = () => {
+      // const scrollY = window.scrollY;
+      // const scrollY = window.pageYOffset;
+      const scrollY = document.documentElement.scrollTop;
+      console.log(scrollY);
+
+      const $scrollValue = document.querySelector(".scroll-value");
+
+      // 1. 전체 눈에 보이지 않는 문서의 크기 => scrollHeight
+      // 2. 현재 눈에 보이는 실제 본문의 크기(내부 경계) => clientHeight
+
+      // 최대 스크롤 값
+      // 문서 전체 높이 - 현재 보이는 부분의 높이 => 스크롤이 가능한 최대 높이
+      console.log(document.documentElement.scrollHeight - document.documentElement.clientHeight)
+
+      // $scrollValue.innerText = `Scroll Y: ${Math.floor(scrollY)}px`;
+
+      /**
+       * window.scrollTop(x), document.body.scrollTop(x)
+       * - window 객체는 스크롤 속성을 직접 관리하지 않음
+       * 
+       * document.documentElement를 써야하는 이유
+       * - 표준 모드(Standards Mode): 최신 웹 표준에 맞춰 브라우저가 HTML, CSS, JavaScript 등을 처리하는 모드
+       * 표준 모드 활성화: HTML 문세의 맨 처음에 <!DOCTYPE html>과 같은 올바른 DOCTYPE 선언이 있으면 브라우저는 표준 모드를 사용
+       * 
+       * - 호환 모드 (Quirks Mode): 웹 표준이 도입되기 이전에 작성된 오래된 웹 페이지들을 제대로 표시하기 위한 모드
+       * 
+       * 스크롤 처리
+       * => 표준 모드: document.documentElement.scrollTop
+       * => 호환 모드: document.body.scrollTop
+      */
+    };
+    window.addEventListener("scroll", updateScrollPosition);
+  </script>
+</body>
+
+</html>

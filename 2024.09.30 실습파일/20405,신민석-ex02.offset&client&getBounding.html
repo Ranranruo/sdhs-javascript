@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    ex02.offsetHeight and clientHeight and getBoundingClientRect
+  </title>
+
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    h1 {
+      color: green;
+    }
+
+    #box {
+      height: 300px;
+      width: 400px;
+      padding: 20px;
+      margin: 20px;
+      border: 20px solid black;
+      overflow-x: scroll;
+      overflow-y: scroll;
+      text-align: center;
+      font-size: 20px;
+    }
+
+    #box.active {
+      transform: scale(0.5);
+      transition: 0.5s ease-in-out;
+    }
+
+    #result {
+      font-size: 20px;
+      font-weight: bold;
+      color: green;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 15px;
+      font-weight: bolder;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>OffsetHeight and ClientHeight and getBoundingClientRect</h1>
+
+    <h2>차이점 살펴보기</h2>
+
+    <div class="btnWrap">
+      <button id="checkBtn">
+        Click Here!
+      </button>
+
+      <button id="changeBtn">
+        Transform
+      </button>
+
+    </div>
+
+    <div id="box">
+      <h2>요소의 크기</h2>
+      height: 300px</br>
+      width: 400px</br>
+      padding: 20px</br>
+      margin: 20px</br>
+      border: 20px</br></br>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      Labore unde debitis, soluta at, vitae molestiae possimus
+      id vero impedit ad dolores officiis quis tempora?
+      Nisi hic a harum pariatur vel.
+      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      Labore unde debitis, soluta at, vitae molestiae possimus
+      id vero impedit ad dolores officiis quis tempora?
+      Nisi hic a harum pariatur vel.
+    </div>
+
+    <p id="result"></p>
+
+  </div>
+  <script>
+    const box = document.querySelector("#box");
+    const result = document.querySelector("#result"); // 결과 텍스트
+
+    document.querySelector("#checkBtn").addEventListener("click", () => {
+      // offset 속성: 눈에 보이는 content + padding + border
+      // - 기준: 부모요소
+      // - 부모 요소의 경계를 기준으로 하여, 부모 요소가 설정된 위치 속성(relative, absolute, fixed)에 따라 기준이 달라짐
+      // - 부모가 없거나 모든 부모가 position: static이면, offsetTop은 문서의 상단에서의 절대적인 위치를 의미함
+
+      let text = "";
+      text += `offset속성<br>`;
+      text += `offsetWidth = content + padding + border = ${box.offsetWidth}px <br>`;
+      text += `offsetHeight = content + padding + border = ${box.offsetHeight}px <br><br>`;
+
+      // client 속성: 눈에 보이는 content + padding
+      text += `client속성<br>`;
+      text += `clientWidth = content + padding = ${box.clientWidth}px <br>`;
+      text += `clientHeight = content + padding = ${box.clientHeight}px <br><br>`;
+
+      // getBoundingClientRect(): 8가지 속성(width, height, left, top, right, bottom, x, y)이 있는 DOMRect 객체를 리턴
+      // => width, height는 content + padding + border
+      // - 기준: viewPort(뷰포트)
+      // - 뷰포트를 기준으로 하는 상대적 위치를 반환
+      
+      text += `getBoundingClientRect() 메서드<br>`;
+      text += `getBoundingClientRect().width = ${box.getBoundingClientRect().width}px <br>`;
+      text += `getBoundingClientRect().height = ${box.getBoundingClientRect().height}px <br><br>`;
+
+      // offset vs getBoundingClientRect()
+      // offset은 layout 너비를 반화느 getBoundingClientRect() 렌더링된 너비를 반환
+
+      // result.innerHTML += text;
+
+      /**
+       * innerHTML
+       * - 지정한 HTML 문자열을 요소의 기존 콘텐츠 전체를 덮어쓰는 방식으로 삽입
+       * - 기존의 모든 자식 요소가 제거되므로 이벤트 리스너나 다른 상태가 초기화
+       * - DMO을 완전히 다시 그리므로 비교적 성능에 부담이 큼
+       * 
+       * insertAdjacentHTML
+       * - 기존 요스의 DOM 구조나 이벤트 리스너에 영향을 주지 않고, 특정 위치에 HTML을 삽입할 수 있음
+       * - DOM의 구조를 다시 렌더링 하지 않고 특정 위치에 삽입
+       * 4가지 위치 옵션
+       * - beforebegin: 대상 요소 앞에 삽임
+       * - afterbegin: 대상 요소 내부의 시작 부분에 삽입
+       * - beforeend: 대상 요소 내부의 끝 부분에 삽입
+       * - afterend: 대상 요소 뒤에 삽입
+       * 
+       * 정리
+       * - innerHTML: 기존의 콘텐츠를 모두 교체할 필요가 있을 때 사용
+       * - insertAdjacentHTML: 기존의 콘텐츠를 유지하면서 특정 위치에 새로운 콘텐츠를 추가할 때 사용
+      */
+
+      // 기준요소.inserAdsacentHTML("위치옵션", 삽일할 요소)
+      result.insertAdjacentHTML("afterbegin", text);
+
+    });
+
+    box.addEventListener("scroll", () => {
+      // scroll 속성: 눈에 보이지 않는 영역까지 포함한 전체 content + padding
+      // console.log("scrollHeight: ",box.scrollHeight);
+      // scrollTop 속성: 선택한 요소의 세로 스크롤 값
+      // console.log("scrollTop: ", box.scrollTop);
+      console.log("scrollHeight - scrollTop = ", box.scrollHeight - box.scrollTop);
+
+      let scrollValue = Math.ceil(box.scrollHeight - box.scrollTop);
+      if (scrollValue === box.clientHeight) {
+        alert("is bottom");
+      }
+    });
+
+    document.querySelector("#changeBtn").addEventListener("click", ()=>{
+      // box요소를 절반으로 줄이기
+      // transform.scale
+      box.setAttribute("style", `transform: scale(.5); transition: .5s;`);
+    });
+  </script>
+</body>
+
+</html>
