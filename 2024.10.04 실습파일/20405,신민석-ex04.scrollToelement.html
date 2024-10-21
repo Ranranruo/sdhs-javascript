@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ex04.Scroll Position Example</title>
+    <style>
+      body {
+        height: 2000px;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      .scroll-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      .scroll-value {
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 20px 40px;
+        border-radius: 10px;
+        font-size: 24px;
+        font-weight: bold;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        text-align: center;
+      }
+
+      #target-element {
+        display: block;
+        margin-top: 1100px;
+        /* margin-top: 요소의 실제 위치를 변경 */
+        /* transform: translateY(1100px); */
+        /* transform: translate(): 시각적으로만 요소를 이동,
+        요소의 실제 위치나 문서 내에서 차지하는 공간에는 영향을 주지 않음 */
+        height: 100px;
+        background-color: lightblue;
+        text-align: center;
+        line-height: 100px;
+        font-size: 20px;
+      }
+
+      #scroll-button {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        z-index: 20;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="scroll-container">
+      <div class="scroll-value">Scroll Y: 0px</div>
+    </div>
+
+    <!-- 스크롤 이동 대상 -->
+    <div id="target-element">Scroll Target</div>
+
+    <!-- 스크롤 이동 버튼 -->
+    <button id="scroll-button">Scroll to Target</button>
+
+    <script>
+      // Q. Scroll to Target 버튼을 누르면 Scroll Target 요소의 상단으로 스크롤 이동
+
+      // window.scrollTo(x, y)
+      // document.querySelector("#scroll-button").addEventListener("click", () => {
+        //   window.scrollTo(0, Scroll Target의 상단 위치);
+      // });
+
+      // 요소 상단=> offsetTop, getBoundingClientRect().top
+      
+      const updateScrollPosition = () => {
+        const scrollY = window.scrollY;
+        const scrollDisplayContent = document.querySelector(".scroll-value");
+        
+        // 스크롤 값을 화면 중앙에 출력 (템플릿 리터럴 사용)
+        scrollDisplayContent.textContent = `Scroll Y: ${Math.floor(scrollY)}px`;
+        
+      }
+      
+      // 스크롤 이벤트 리스너 추가
+      window.addEventListener("scroll", updateScrollPosition);
+      
+      // Q. Scroll to Target 버튼을 누르면 Scroll Target 요소의 상단으로 스크롤 이동
+      // 특정 위치로 스크롤 하는 함수
+      const scrollToTarget = () => {
+        const targetElement = document.getElementById("target-element");
+        // targetElement의 TOP: 1.offset, 2.client, 3.getBoundingClientRect()
+        console.log("offset: ", targetElement.offsetTop);
+        // console.log("client: ", targetElement.clientTop);
+        console.log("getBoundingClientRect: ", targetElement.getBoundingClientRect().top);
+        const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+        // const targetPosition = targetElement.offsetTop;
+
+        // 부드럽게 스크롤 이동
+
+
+        window.scrollTo({
+          top: targetPosition,
+          behavior: "smmooth"
+        });
+        
+        /**
+         * clientTop이 0이 나오는 이유?
+         * 요소의 테두리 위쪽 너비를 반환, 테두리가 있으면 그 두께가 값으로 반환됨
+         * => 따라서 요소가 어디에 위치에 있는지와는 관련이 없음
+         * 
+         * offsetTop
+         * - 기준: 부모 요소
+         * - 문서 전체 기준의 절대적인 위치를 반환하므로, 새로고침을 하더라도 위치는 유지됨
+         * 
+         * getBoundingClientRect()
+         * - 기준: ViewPort(뷰포트)
+         * - 뷰포트를 기준으로 하는 상대적 위치를 변환하므로 새로고침을 하면 위치가 달라짐
+         */
+    };
+      document.querySelector("#scroll-button").addEventListener("click", scrollToTarget); 
+      </script>
+  </body>
+  </html>
+  

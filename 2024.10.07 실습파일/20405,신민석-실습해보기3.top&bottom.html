@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>top and bottom</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    button {
+      position: fixed;
+      padding: 10px 20px;
+      margin: 20px;
+      background: black;
+      color: #fff;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    #bottom {
+      margin: 70px 0 0 20px;
+    }
+
+    div {
+      display: flex;
+      width: 100vw;
+      min-height: 100vh;
+      justify-content: center;
+      align-items: center;
+      background: #eee;
+      font-size: 50px;
+      font-weight: bolder;
+    }
+
+    div:nth-of-type(2) {
+      background: cornflowerblue;
+    }
+
+    div:nth-of-type(3) {
+      background: coral;
+    }
+  </style>
+</head>
+
+<body>
+  <button id="top" type="button">top</button>
+  <button id="bottom" type="button">bottom</button>
+  <div>content 1</div>
+  <div>content 2</div>
+  <div>content 3</div>
+  <script>
+    document.querySelectorAll("button").forEach(el=>el.addEventListener("click",(e)=>{
+      const id = e.target.id;
+      if(id === "top") return window.scrollTo({top: 0, left: 0, behavior: "smooth"});
+      console.log(document.body.clientHeight, document.documentElement.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight);
+      let top = document.documentElement.offsetHeight;
+      top = document.body.offsetHeight;
+      top = document.body.clientHeight;
+      top = document.body.scrollHeight;
+      window.scrollTo({
+        top,
+        left: 0,
+        behavior: "smooth"
+      })
+    }))
+
+    console.log(document.querySelector("html"))
+  </script>
+  <script>
+    // top버튼: 문서의 최상단 => scrollTo({top: 0}, smooth)
+    // bottom 버튼: 문서의 최하단 => scrollTo({top: 문서의 전체 높이}, smooth)
+    // 문서의 전체 높이 4가지
+    const doHeight1=document.body.offsetHeight;
+    const doHeight2=document.body.clientHeight;
+    const doHeight3=document.body.scrollHeight;
+    const doHeight4=document.body.getBoundingClientRect().height;
+    console.log(doHeight1, doHeight2, doHeight3, doHeight4)
+    const movingScroll = (target) => {
+      // 1.offsetHeight, 2.clientHeight, 3.scrollHeight, 4.getBoundingClientRect().height
+      window.scrollTo({
+        top: target.id === "top" ? 0 : doHeight1,
+        behavior: "smooth"
+      })
+    };
+    document.querySelectorAll("button").forEach(el=>{
+      el.addEventListener("cllick",(e)=>{
+        movingScroll(e.target);
+      })
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lazy Loading</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    .container {
+      width: 100%;
+      position: relative;
+    }
+
+    .container>.title {
+      text-align: center;
+      text-shadow: 3px 3px aqua;
+      margin: 4rem;
+      font-size: 3.2rem;
+    }
+
+    .container>.imageWrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 20px 0;
+    }
+
+    .container>.imageWrap>img {
+      border-radius: 10px;
+      display: block;
+      width: 600px;
+      height: 500px;
+      margin: 2rem auto;
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="title">Autumn Pictures</h1>
+    <div class="imageWrap">
+
+      <!-- 1. dataset: 특정한 데이터를 DOM 요소에 저장해두기 위한 목적 
+      data-* -->
+      <img
+        src="https://plus.unsplash.com/premium_photo-1667126444822-94fb21279436?q=60&w=10&auto=format&fit=crop&ixlib=rb-4.0.3"
+        data-src="https://plus.unsplash.com/premium_photo-1667126444822-94fb21279436?q=60&w=800&auto=format&fit=crop&ixlib=rb-4.0.3"
+        alt="autumn1">
+
+      <img
+        src="https://plus.unsplash.com/premium_photo-1673458832959-bd49ed58d513?q=60&w=10&auto=format&fit=crop&ixlib=rb-4.0.3"
+        data-src="https://plus.unsplash.com/premium_photo-1673458832959-bd49ed58d513?q=60&w=800&auto=format&fit=crop&ixlib=rb-4.0.3"
+        alt="autumn2">
+
+      <img
+        src="https://images.unsplash.com/photo-1445855743215-296f71d4b49c?q=60&w=10&auto=format&fit=crop&ixlib=rb-4.0.3"
+        data-src="https://images.unsplash.com/photo-1445855743215-296f71d4b49c?q=60&w=800&auto=format&fit=crop&ixlib=rb-4.0.3"
+        alt="autumn3">
+
+      <img
+        src="https://plus.unsplash.com/premium_photo-1669842613532-1f0947aa6fa6?q=60&w=10&auto=format&fit=crop&ixlib=rb-4.0.3"
+        data-src="https://plus.unsplash.com/premium_photo-1669842613532-1f0947aa6fa6?q=60&w=800&auto=format&fit=crop&ixlib=rb-4.0.3"
+        alt="autumn4">
+
+      <img
+        src="https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?q=60&w=10&auto=format&fit=crop&ixlib=rb-4.0.3"
+        data-src="https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?q=60&w=800&auto=format&fit=crop&ixlib=rb-4.0.3"
+        alt="autumn5">
+
+      <img
+        src="https://plus.unsplash.com/premium_photo-1668456464829-d1fcceaa4ee5?q=60&w=10&auto=format&fit=crop&ixlib=rb-4.0.3"
+        data-src="https://plus.unsplash.com/premium_photo-1668456464829-d1fcceaa4ee5?q=60&w=800&auto=format&fit=crop&ixlib=rb-4.0.3"
+        alt="autumn6">
+
+
+      <img
+        src="https://images.unsplash.com/photo-1504788363733-507549153474?q=60&w=10&auto=format&fit=crop&ixlib=rb-4.0.3"
+        data-src="https://images.unsplash.com/photo-1504788363733-507549153474?q=60&w=800&auto=format&fit=crop&ixlib=rb-4.0.3"
+        alt="autumn7">
+
+      <img
+        src="https://images.unsplash.com/photo-1462717909674-1e3e107e231b?q=60&w=10&auto=format&fit=crop&ixlib=rb-4.0.3"
+        data-src="https://images.unsplash.com/photo-1462717909674-1e3e107e231b?q=60&w=800&auto=format&fit=crop&ixlib=rb-4.0.3"
+        alt="autumn7">
+
+    </div>
+
+
+  </div>
+
+  <script>
+    // IntersectionObserver API를 사용한 스크롤 이벤트
+    // - 타겟 요소가 뷰포트나 특정 컨테이너와 교차하는지 여부를 관찰할 때 사용
+    /**
+     * Lazy Loading(레이지 로딩)
+     * - 불필요한 리소스(이미지, 스크립트, 비디오 등)를 미리 로드하지 않고, 필요할 때 로드하는 기술
+     * - 페이지 성능을 향상시키고 ,사용자 경험을 개선하는 데 도움을 줌
+    */
+
+    /**
+     * 뷰포트에 이미지가 감지되었을 때 src => data-src로 변경
+     * 
+     * 타겟 요소: image태그
+     * 감지 되었을 때: isIntersecting
+    */
+
+    const $$image = document.querySelectorAll("img");
+    const firstIoCallback = (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting)
+          entry.target.src = entry.target.dataset.src;
+      })
+    }
+    const secondIoCallback = (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting)
+          entry.target.src = entry.target.src.replace("w=10", "w=800")
+      })
+    };
+    const io = new IntersectionObserver(secondIoCallback);
+    $$image.forEach(el => io.observe(el));
+  </script>
+</body>
+
+</html>

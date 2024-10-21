@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Infinite Scroll Page</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Arial", sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #4caf50;
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    #post-container {
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
+      margin: 100px 0 50px 0;
+    }
+
+    .post {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .post:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .post h2 {
+      margin-bottom: 15px;
+      color: #333;
+      font-size: 2rem;
+    }
+
+    .post p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: #666;
+    }
+
+    #loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 50px;
+      visibility: hidden;
+    }
+    .spinner{
+  position: relative;
+  width: 12px;
+  height: 12px;
+
+  top: 46%;
+  top: -webkit-calc(50% - 6px);
+  top: calc(50% - 6px);
+  /* left: 46%;
+  left: -webkit-calc(50% - 6px);
+  left: calc(50% - 6px); */
+  
+  border-radius: 12px;
+  background-color: #000;
+  -webkit-transform-origin:  50% 50%;
+      transform-origin:  50% 50% ;
+  -webkit-animation: spinner 1s ease-in-out infinite;
+      animation: spinner 1s ease-in-out infinite;
+}
+
+.spinner:before{
+  content: "";
+  position: absolute;
+  background-color: rgba(0, 0, 0, .5);
+  top: 0px;
+  left: -25px;
+  height: 12px;
+  width: 12px;
+  border-radius: 12px;
+}
+
+.spinner:after{
+  content: "";
+  position: absolute;
+  background-color: rgba(0, 0 ,0 ,.5);
+  top: 0px;
+  left: 25px;
+  height: 12px;
+  width: 12px;
+  border-radius: 12px;
+}
+
+
+@-webkit-keyframes spinner{
+    0%{-webkit-transform:rotate(0deg);}
+    50%{-webkit-transform:rotate(180deg);}
+    100%{-webkit-transform:rotate(180deg);}
+}
+
+@keyframes spinner{
+    0%{transform:rotate(0deg);}
+    50%{transform:rotate(180deg);}
+    100%{transform:rotate(180deg);}
+}
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Infinite Scroll with Stylish Cards</h1>
+    <div id="post-container">
+      <!-- <div class="post">
+        <h2>Post Title 1</h2>
+        <p>This is the content of post 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum
+          tristique.</p>
+      </div> -->
+    </div>
+    <div id="loading">
+      <div class="spinner"></div>
+      <p>Loading more content...</p>
+    </div>
+  </div>
+  <script>
+    // 5개의 post클래스를 가진 요소가 생성되며
+    // 스크롤을 내리면 5개 단위로 무한 스크롤링 되게 만들기
+  
+    // 가상 서버 요청 (1초 딜레이)
+    // setTimeout으로 서버 요청 시뮬레이션: 1초 동안 지연시킨 후 카드들을 추가
+    const $container = document.querySelector("#post-container");
+
+    const useLoading = (loadingElement) => {
+      const $loading = loadingElement;
+      let loading = false;
+      const showLoading = () => {
+        loading = true;
+        $loading.style.visibility = "visible";
+      }
+      const hideLoading = () => {
+        loading = false;
+        $loading.style.visibility = "hidden";
+      }
+      const isLoading = () => loading;
+      const isNotLoading = () => !loading;
+      const getLoadingElement = () => $loading;
+      return {showLoading, hideLoading, isLoading, isNotLoading, getLoadingElement};
+    }
+    
+    const loading = useLoading(document.querySelector("#loading"));
+    const io = new IntersectionObserver((entries)=>{
+      if(entries[0].isIntersecting && loading.isNotLoading()) addPost(5);
+    },{threshold: 1})
+    io.observe(loading.getLoadingElement());
+
+    const addPost = (count) => {
+      loading.showLoading();
+      setTimeout(()=>{
+        loading.hideLoading();
+        const idx = document.querySelectorAll("#post-container > .post").length ?? 0; 
+        for (let i = 1; i <= count; i++) {
+          const $newCards = document.createElement("div");
+          $newCards.classList.add("post")
+          const $newTitle = document.createElement("h2");
+          $newTitle.innerText = `Post Title ${idx + i}`;
+          const $newP = document.createElement("p");
+          $newP.innerText = `This is the content of post ${idx + i}. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum
+          tristique.`;
+          $newCards.append($newTitle);
+          $newCards.append($newP);
+          $container.append($newCards);
+        }
+      }, 1500)
+    }
+  </script>
+</body>
+
+</html>

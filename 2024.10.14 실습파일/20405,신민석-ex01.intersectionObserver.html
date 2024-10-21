@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IntersectionObserver</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .elementWrap {
+      display: flex;
+      margin-top: 200px;
+      margin-bottom: 200px;
+      flex-direction: column;
+      gap: 800px;
+    }
+
+    .image-box {
+      height: 300px;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .image-box.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>IntersectionObserver 예제</h1>
+    <p>스크롤을 내리면 이미지가 부드럽게 나타났다가 스크롤을 올리면 사라집니다.</p>
+
+    <div class="elementWrap">
+      <div class="image-box">
+        <img src="https://via.placeholder.com/600x300?text=Image+1" alt="Placeholder Image 1" />
+      </div>
+      <div class="image-box">
+        <img src="https://via.placeholder.com/600x300?text=Image+2" alt="Placeholder Image 2" />
+      </div>
+      <div class="image-box">
+        <img src="https://via.placeholder.com/600x300?text=Image+3" alt="Placeholder Image 3" />
+      </div>
+      <div class="image-box">
+        <img src="https://via.placeholder.com/600x300?text=Image+4" alt="Placeholder Image 4" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+      const imageBoxes = document.querySelectorAll(".elementWrap >.image-box");
+      // 1. 뷰포트와 요소의 위치 관계를 이용한 스크롤 이벤트
+
+      // window.addEventListener('scroll', ()=>{
+      //   imageBoxes.forEach((box)=>{
+      //     // 요소가 절반만큼 보였을 때 애니메이션을 트리거
+      //     const rect = box.getBoundingClientRect();
+      //     const rectPoint = rect.height / 2 // 요소의 절반
+      //     // 요소의 중간 지점이 화면의 하단에 도달했을 때 애니메이션을 적용하는 조건
+      //     if(rect.top + rectPoint < window.innerHeight){
+      //       box.classList.add("visible");
+      //     } else {
+      //       box.classList.remove("visible");
+      //     }
+      //   })
+      // });
+
+      // 스크롤 이벤트를 강제로 발생
+      window.dispatchEvent(new Event("scroll"));
+
+      // 2. IntersectionObserver API를 사용한 스크롤 이벤트
+      // - 타겟 요소가 뷰포트나 특정 컨테이너와 교차하는지 여부를 관찰할 때 사용
+
+      /**
+       * 생성자 함수로 관찰할 요소와 콜백함수를 지정
+       * 1. const io = new IntersectionObserver(callback, options)
+       * - callback: 타켓요소가 뷰포트에 교차될 때(들어오거나) 실행되는 함수
+       * - options: 관찰할 요소의 옵션 설정(어떤 기준으로 요소를 관찰할지 지정)
+       * 1) root: 뷰포트의 역하을 하는 요소(기본값: 브라우저의 뷰포트)
+       * 2) rootMargin: root 경계 외부에 추가적인 여백을 설정
+       * 3) threshold: 교차 비율(백분율 0 ~ 1)
+       * 
+       * 2. 교차 상태를 관찰할 요소를 등록
+       * io.observe(targetElemnet);
+       * 
+       * 3. 관찰을 중지
+       * unobserve(targetElement): 특정 요소의 관찰을 중지
+       * disconnect(): 모든 관찰을 중지
+       * 
+       * IntersectionObserverEntry 주요 속성
+       * 1. isIntersecting: 요소가 뷰포트(또는 지정된 루트 요소)와 교차하고 있는지를 나타냄
+       * - 타입: boolean
+       * 2. target: 관찰 중인 대상 요소
+       * - 타입: Element
+      */
+      const observerOptions = {
+        root: null, // 뷰포트를 기본으로 설정
+        threshold: .5
+      }
+
+      const observerCallback = (entries, observer) => {
+        entries.forEach((entry)=>{
+          console.log("entry: ", entry);
+          console.log("entryTargetEl: ", entry.target);
+          // 요소가 보이기 시작하면 애니메이션을 활성화
+          if(entry.isIntersecting){
+            entry.target.classList.add("visible");
+          } 
+          io.unobserve(entry.target)
+          // else {
+          //   entry.target.classList.remove("visible");
+          // }
+        })
+      }
+      const io = new IntersectionObserver(observerCallback, observerOptions);
+
+      imageBoxes.forEach(box=>{
+        io.observe(box); // 각 이미지 박스를 관찰
+      })
+    });
+  </script>
+</body>
+
+</html>

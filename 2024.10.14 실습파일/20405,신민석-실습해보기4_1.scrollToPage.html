@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ScrollToPage</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
+
+    header {
+      width: 100%;
+      position: fixed;
+      display: flex;
+      justify-content: center;
+      padding: 20px 0;
+    }
+
+    .nav {
+      list-style: none;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      color: white;
+      width: 300px;
+      height: 50px;
+      border-radius: 30px;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .nav>li:hover,
+    .nav>li.active {
+      border-bottom: 2px solid white;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    section {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 5rem;
+      font-weight: 600;
+      background-color: #f8c471;
+    }
+
+    section:nth-of-type(2) {
+      /* min-height: 80vh; */
+    }
+
+    section:nth-of-type(3) {
+      /* min-height: 120vh; */
+    }
+
+    section:nth-child(2) {
+      background-color: #f9e79f;
+    }
+
+    section:nth-child(4) {
+      background-color: #abebc6;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <ul class="nav">
+      <li class="active">1번</li>
+      <li>2번</li>
+      <li>3번</li>
+    </ul>
+  </header>
+
+  <section class="content">section 1</section>
+  <section class="content">section 2</section>
+  <section class="content">section 3</section>
+
+  <script>
+    const $$content = document.querySelectorAll(".content")
+    const $nav = document.querySelector(".nav");
+
+
+    const setActiveNavItem = (dom) => {
+      $nav.querySelector(".active").classList.remove("active");
+      dom.classList.add("active");
+    }
+    $nav.querySelectorAll("li").forEach(el => el.addEventListener("click", (e) => {
+      const index = [...$nav.children].indexOf(e.currentTarget);
+      window.scrollTo({
+        top: $$content[index].offsetTop,
+        behavior: "smooth"
+      })
+      setActiveNavItem($nav.children[index]);
+    }))
+
+    $$content.forEach((el, idx)=>{
+      console.log(`section${idx+1}의 offsetTop: ${el.offsetTop}`);
+    });
+
+    // 스크롤 했을 때 네비게이션 번호가 active되는 조건
+    // 스크롤이 해당 섹션의 절반 정도 닿았을대
+    // => 현재 스크롤 값: window.scrollY, window.pageYoffset, element.scrollTop
+    // => 보여지는 섹션의 높이 or TOP => client(요소 외부 경계)
+    // => 뷰포트의 높이 => window.innerHeight
+    window.addEventListener("scroll", ()=>{
+      $$content.forEach((el, idx)=>{
+        let scrollValue = window.scrollY ||
+        document.documentElement.scrollTop ||
+        window.pageYOffset;
+
+        // if(){
+        //   setActiveNavi();
+        // }
+
+        // 1. 고정된 위치를 기준으로 동작 => offset
+        // 현재 스크롤 위치가 섹션의 상단에서 뷰포트 절반만큼 떨어진 곳에 도달했을 때 네비게이션이 활성화
+        // 수정 => 즉, 섹션의 상단부터 하단까지의 구간에서 뷰포트의 중앙이 해당 구간에 포함될 때만 네비게이션이 활성화
+        let sectionsTop = el.offsetTop; // 섹션의 상단
+        let sectionsBottom = sectionsTop + el.clientHeight; // 섹션의 상단 + 섹션의 높이
+
+        const triggerPoint = scrollValue + window.innerHeight / 2; // 화면의 중앙
+
+        // if(scrollValue >= sectionsTop - window.innerHeight / 2){
+        // if(triggerPoint >= sectionsTop && triggerPoint <= sectionsBottom){
+        //   setActiveNavItem($nav.children[idx]);
+        // }
+        // 정리 => 페이지 전체에서의 고정된 섹션 위치를 기준으로 스크롤 상태를 체크
+
+        // 2. 동적인 위치를 기준으로 동작 => getBoundingClientRect()
+        // 섹션의 상단이 뷰포트의 절반 위치보다 위쪽에 있으면 네비게이션이 활성화
+        if(window.innerHeight / 2 >= el.getBoundingClientRect().top){
+          setActiveNavItem($nav.children[idx]);
+        }
+        // 정리 => 뷰포트 내에서의 상대적 섹션 위치를 기준으로 현재 스크롤에 값에 따라 섹션이 중앙에 도달했는지 체크
+      })
+    })
+  </script>
+</body>
+</body>
+
+</html>
